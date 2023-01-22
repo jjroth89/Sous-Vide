@@ -23,7 +23,10 @@ This program is designed to control the temperature of a DIY sous-vide setup usi
 1. Download and install the OneWire, DallasTemperature, Keypad, and LibPrintf libraries from the Arduino Library Manager.
 2. Connect the temperature sensor, keypad, and relay module to the Arduino as per the connection diagram.
 3. Upload the code to the Arduino and open the serial monitor.
-4. Press a key on the keypad to trigger a temperature reading. The reading will be displayed in the format "Key pressed - DEV# - Temperature C"
+4. Press a key on the keypad to trigger a temperature reading. The reading will be displayed in the format:
+```
+Key pressed - DEV# - Temperature C
+```
 
 ## Additional notes
 - Make sure to have the flat side of the temperature sensor facing the center of the board to ensure proper connection.
@@ -45,7 +48,7 @@ This program is designed to control the temperature of a DIY sous-vide setup usi
 - Implementing a mobile app for remote monitoring and control of the temperature.
 
 ## Changelog
-### v1.0
+### v0.6
 - Initial release of the program
 - Includes temperature reading and display through keypad input and serial monitor output
 - Optional relay module for controlling a heating source in a DIY sous-vide setup

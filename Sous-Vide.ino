@@ -14,7 +14,8 @@ const byte COLS = 4;
 int numberOfDevices;
 
 // Define keypad button layout
-char hexaKeys[ROWS][COLS] = {
+char hexaKeys[ROWS][COLS] =
+{
   {'1', '2', '3', 'A'},
   {'4', '5', '6', 'B'},
   {'7', '8', '9', 'C'},
@@ -38,7 +39,7 @@ OneWire oneWire(ONE_WIRE_BUS);
 // Pass OneWire instance to Dallas Temperature library
 DallasTemperature sensors(&oneWire);
 
-void setup(void)
+void setup()
 {
     // Configure the digital pins 8 and 10 as outputs to connect the DS18B20 sensor without a resistor
     pinMode(8, OUTPUT);
@@ -58,19 +59,23 @@ void setup(void)
 }
 
 
-void loop(void) {
+void loop()
+{
     // Begin communication with Dallas Temperature sensors
     sensors.begin();
     // Get the number of devices connected
     numberOfDevices = sensors.getDeviceCount();
     // Check if a key press is detected
     char customKey = customKeypad.getKey();
-    if (customKey) {
+    if (customKey)
+    {
         DeviceAddress tempDeviceAddress;
         // Loop through all connected devices
-        for (int i = 0; i < numberOfDevices; i++) {
+        for (int i = 0; i < numberOfDevices; i++)
+        {
             // Get the device address
-            if (sensors.getAddress(tempDeviceAddress, i)) {
+            if (sensors.getAddress(tempDeviceAddress, i))
+            {
                 // Request temperature from device
                 sensors.requestTemperatures();
                 // Get the temperature in Celsius

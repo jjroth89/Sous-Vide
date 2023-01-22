@@ -1,0 +1,20 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "G:\\My Drive\\Arduino\\libraries\\**",
+                "C:\\Users\\Jonathan\\.platformio\\packages\\**",
+                "C:\\Users\\Jonathan\\AppData\\Local\\Arduino15\\packages\\**"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "intelliSenseMode": "windows-msvc-x64"
+        }
+    ],
+    "version": 4
+}
