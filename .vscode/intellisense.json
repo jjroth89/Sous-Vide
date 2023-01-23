@@ -1,0 +1,20 @@
+{
+    "configurations": [
+        {
+            "name": "Error Handling",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "<path/to/include/files>"
+            ],
+            "defines": [
+                "_DEBUG",
+                "NDEBUG"
+            ],
+            "intelliSenseMode": "clang-x64"
+        }
+    ],
+    "exclude": [
+        "**/*:cannot open source file*",
+        "**/*:#include errors detected*"
+    ]
+}
