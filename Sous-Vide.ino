@@ -1,3 +1,30 @@
+/**
+ * DIY Sous-Vide Temperature Control using Arduino
+ * 
+ * Project: Sous-Vide Temperature Control
+ * 
+ * Description:
+ * This code uses a Keypad, a waterproof DS18B20 sensor, and relays
+ * to control the temperature of a DIY Sous-Vide cooking setup.
+ * Instead of using the official OneWire library, this code uses a
+ * modified version called OneWireNoResistor, created by bigjosh.
+ * This modification allows the code to work without the need for
+ * external pull-up resistors for the temperature sensors.
+ * 
+ * Author: jjroth89
+ * Date: January 2023
+ * 
+ * Resources:
+ * - OneWire library modified by bigjosh:
+ * https://github.com/bigjosh/OneWireNoResistor
+ * - Article explaining the modification:
+ * https://wp.josh.com/2014/06/23/no-external-pull-up-needed-for-ds18b20-temp-sensor/
+ * 
+ * @author jjroth89
+ * @version 0.7
+ */
+
+
 #include <OneWire.h>
 #include <DallasTemperature.h>
 #include <Keypad.h>
@@ -20,13 +47,13 @@ char hexaKeys[ROWS][COLS] =
 };
 
 // Define row and column pin numbers for keypad
-byte rowPins[ROWS] = {13, 12, 11, 6}; 
-byte colPins[COLS] = {5, 4, 3, 2}; 
+byte rowPins[ROWS] = {9, 8, 7, 6};   // Orange wires, ascending order
+byte colPins[COLS] = {5, 4, 3, 2};      // White wires, ascending order
 
 // Initialize keypad using defined layout and pin numbers
 Keypad customKeypad = Keypad(makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS); 
 
-// Define pin number for OneWire bus and relay
+// Define pin number for OneWire bus and relays
 #define ONE_WIRE_BUS A1
 #define HEAT_RELAY_PIN A3
 #define PUMP_RELAY_PIN A4
@@ -39,7 +66,7 @@ DallasTemperature sensors(&oneWire);
 
 void setup()
 {
-    // Configure the digital pins 8 and 10 as outputs to connect the DS18B20 sensor without a resistor
+    // Configure the digital pins A0 and A2 as outputs to connect the DS18B20 sensor without a resistor
     pinMode(A0, OUTPUT);
     pinMode(A2, OUTPUT);
     digitalWrite(A0, LOW);
@@ -48,8 +75,9 @@ void setup()
     // Start the serial communication
     Serial.begin(9600);
 
-    // Configure the relay pin as an output
-    pinMode(RELAY_PIN, OUTPUT);
+    // Configure the relay pins as outputs
+    pinMode(HEAT_RELAY_PIN, OUTPUT);
+    pinMode(PUMP_RELAY_PIN, OUTPUT);
 
     // Wait for 1500ms before displaying the message
     delay(1500);

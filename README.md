@@ -51,4 +51,9 @@ Key pressed - DEV# - Temperature C
 ### v0.6
 - Initial release of the program
 - Includes temperature reading and display through keypad input and serial monitor output
-- Optional relay module for controlling a heating source in a DIY sous-vide setup
+- Optional relay module for controlling a heating source
+
+### v0.7
+- Included header comment
+- Relocated the pins on the Arduino UNO board to get a more clean looking device
+- 
