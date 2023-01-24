@@ -1,6 +1,3 @@
-// This works to output key presses, device number and temperature.
-// Next step is to add the switch control and create the profiles.
-
 #include <OneWire.h>
 #include <DallasTemperature.h>
 #include <Keypad.h>
@@ -30,8 +27,9 @@ byte colPins[COLS] = {5, 4, 3, 2};
 Keypad customKeypad = Keypad(makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS); 
 
 // Define pin number for OneWire bus and relay
-#define ONE_WIRE_BUS 9
-#define RELAY_PIN 7
+#define ONE_WIRE_BUS A1
+#define HEAT_RELAY_PIN A3
+#define PUMP_RELAY_PIN A4
 
 // Initialize OneWire instance to communicate with devices
 OneWire oneWire(ONE_WIRE_BUS);
@@ -42,10 +40,10 @@ DallasTemperature sensors(&oneWire);
 void setup()
 {
     // Configure the digital pins 8 and 10 as outputs to connect the DS18B20 sensor without a resistor
-    pinMode(8, OUTPUT);
-    pinMode(10, OUTPUT);
-    digitalWrite(8, LOW);
-    digitalWrite(10, LOW);
+    pinMode(A0, OUTPUT);
+    pinMode(A2, OUTPUT);
+    digitalWrite(A0, LOW);
+    digitalWrite(A2, LOW);
 
     // Start the serial communication
     Serial.begin(9600);
