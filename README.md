@@ -35,9 +35,12 @@ Key pressed - DEV# - Temperature C
 
 ## Additional notes
 - This code uses the OneWireNoResistor library created by bigjosh, instead of the official OneWire library. The reason for this is that this version eliminates the need for external pull-up resistors for the temperature sensors. It is important to note that the official version of the OneWire library will not work with this code.
-- For more information on the OneWireNoResistor library by bigjosh, check out the documentation on his GitHub page: https://github.com/bigjosh/OneWireNoResistor
-- For more information on the DallasTemperature library, check out the documentation on the official website: https://milesburton.com/Dallas_Temperature_Control_Library
-- For more information on the Keypad library, check out the documentation on the official website: https://playground.arduino.cc/Code/Keypad/
+- For more information on the OneWireNoResistor library by bigjosh, check out the documentation on his GitHub page:
+https://github.com/bigjosh/OneWireNoResistor
+- For more information on the DallasTemperature library, check out the documentation on the official website:
+https://milesburton.com/Dallas_Temperature_Control_Library
+- For more information on the Keypad library, check out the documentation on the official website:
+https://playground.arduino.cc/Code/Keypad/
 - The LibPrintf library is used to enable the printf function for formatting the output in a more readable format.
 
 ## Features to be added
