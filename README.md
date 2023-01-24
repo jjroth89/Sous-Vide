@@ -1,23 +1,28 @@
 # DIY Sous-Vide Temperature Control using Arduino
-This program is designed to control the temperature of a DIY sous-vide setup using a Dallas DS18x20 temperature sensor, a 4x4 hex keypad, and an optional relay module. The temperature sensor uses the OneWire communication protocol and the DallasTemperature library to read the temperature, which is then triggered by a key press from the keypad. The temperature readings are displayed in the serial monitor, allowing for easy monitoring and control of the sous-vide cooking process.
+The DIY Sous-Vide Temperature Control program is an innovative solution to achieve precision temperature control in a homemade sous-vide setup. Using a Dallas DS18B20 waterproof temperature sensor, a 4x4 hex keypad, and two relay modules, this project allows you to easily control the temperature of your sous-vide bath.
+
+This program utilizes the OneWire communication protocol, but instead of using the official OneWire library, it utilizes a modified version called OneWireNoResistor, created by bigjosh. This modification allows the code to work without the need for external pull-up resistors for the temperature sensors. Additionally, the program uses the DallasTemperature library to read the temperature, which is then triggered by a key press from the keypad.
+
+The device will be loaded with preset options for different foods, as well as a feature to allow manual preset inputs, giving you ultimate control over your sous-vide cooking. With this project, you can achieve professional-grade results at a fraction of the cost of commercial sous-vide machines.
 
 ## Hardware Used
-- Arduino board (compatible with the DallasTemperature library)
-- Dallas DS18x20 temperature sensor
-- 4x4 hex keypad
-- Relay module (optional)
+- Arduino UNO
+- Dallas DS18B20 waterproof temperature sensor
+- Generic 4x4 hex keypad
+- Relay modules
 
 ## Libraries Used
-- OneWire library
+- OneWireNoResistor library by bigjosh
 - DallasTemperature library
 - Keypad library
 - LibPrintf library (for printf function)
 
-## Connection Diagram
-- Connect the temperature sensor data wire to pin 9 on the Arduino
-- Connect the keypad rows to pins 13, 12, 11, and 6 on the Arduino
-- Connect the keypad columns to pins 5, 4, 3, and 2 on the Arduino
-- Connect the relay module to pin 7 on the Arduino (optional)
+## Arduino Connection Diagram
+- Connect the temperature sensor data wire (yellow) to pin A1
+- Connect the keypad rows to pins 9, 8, 7, 6
+- Connect the keypad columns to pins 5, 4, 3, 2
+- Connect the heat relay to pin A3
+- Connect the pump relay to pin A4
 
 ## Setup
 1. Download and install the OneWire, DallasTemperature, Keypad, and LibPrintf libraries from the Arduino Library Manager.
@@ -29,10 +34,11 @@ Key pressed - DEV# - Temperature C
 ```
 
 ## Additional notes
-- Make sure to have the flat side of the temperature sensor facing the center of the board to ensure proper connection.
-- The LibPrintf library is used to enable the printf function for formatting the output in a more readable format.
+- This code uses the OneWireNoResistor library created by bigjosh, instead of the official OneWire library. The reason for this is that this version eliminates the need for external pull-up resistors for the temperature sensors. It is important to note that the official version of the OneWire library will not work with this code.
+- For more information on the OneWireNoResistor library by bigjosh, check out the documentation on his GitHub page: https://github.com/bigjosh/OneWireNoResistor
 - For more information on the DallasTemperature library, check out the documentation on the official website: https://milesburton.com/Dallas_Temperature_Control_Library
 - For more information on the Keypad library, check out the documentation on the official website: https://playground.arduino.cc/Code/Keypad/
+- The LibPrintf library is used to enable the printf function for formatting the output in a more readable format.
 
 ## Features to be added
 - Addition of temperature and time profiles for the relay module to control a heating source.
@@ -55,5 +61,5 @@ Key pressed - DEV# - Temperature C
 
 ### v0.7
 - Included header comment
+- Improved README.md
 - Relocated the pins on the Arduino UNO board to get a more clean looking device
-- 
