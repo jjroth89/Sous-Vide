@@ -1,8 +1,6 @@
 /**
  * DIY Sous-Vide Temperature Control using Arduino
  * 
- * Project: Sous-Vide Temperature Control
- * 
  * Description:
  * This code uses a Keypad, a waterproof DS18B20 sensor, and relays
  * to control the temperature of a DIY Sous-Vide cooking setup.
@@ -21,7 +19,7 @@
  * https://wp.josh.com/2014/06/23/no-external-pull-up-needed-for-ds18b20-temp-sensor/
  * 
  * @author jjroth89
- * @version 0.7
+ * @version 0.7.1
  */
 
 
@@ -108,6 +106,21 @@ void loop()
                 float tempC = sensors.getTempC(tempDeviceAddress);
                 // Print the key press, device number, and temperature to the serial monitor
                 printf("%c - DEV%i - %.2fC\n", customKey, i, tempC);
+            }
+        }
+
+        // Toggles heat relay ON/OFF on "*" key press
+        if (customKey == '*')
+        {
+            if(digitalRead(HEAT_RELAY_PIN) == LOW)
+            {
+                digitalWrite(HEAT_RELAY_PIN, HIGH);
+                printf("Heat relay ON\n");
+            }
+            else
+            {
+                digitalWrite(HEAT_RELAY_PIN, LOW);
+                printf("Heat relay OFF\n");
             }
         }
     }
