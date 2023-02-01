@@ -15,7 +15,6 @@ The device will be loaded with preset options for different foods, as well as a 
 - OneWireNoResistor library by bigjosh
 - DallasTemperature library
 - Keypad library
-- LibPrintf library (for printf function)
 
 ## Arduino Connection Diagram
 - Connect the temperature sensor data wire (yellow) to pin A1
@@ -25,12 +24,12 @@ The device will be loaded with preset options for different foods, as well as a 
 - Connect the pump relay to pin A4
 
 ## Setup
-1. Download and install the OneWire, DallasTemperature, Keypad, and LibPrintf libraries from the Arduino Library Manager.
+1. Download and install the OneWire, DallasTemperature and Keypad libraries from the locations previusloy provided.
 2. Connect the temperature sensor, keypad, and relay module to the Arduino as per the connection diagram.
 3. Upload the code to the Arduino and open the serial monitor.
 4. Press a key on the keypad to trigger a temperature reading. The reading will be displayed in the format:
 ```
-Key pressed - DEV# - Temperature C
+Key pressed - Temperature C
 ```
 
 ## Additional notes
@@ -41,7 +40,6 @@ https://github.com/bigjosh/OneWireNoResistor
 https://milesburton.com/Dallas_Temperature_Control_Library
 - For more information on the Keypad library, check out the documentation on the official website:
 https://playground.arduino.cc/Code/Keypad/
-- The LibPrintf library is used to enable the printf function for formatting the output in a more readable format.
 
 ## Features to be added
 - Addition of temperature and time profiles for the relay module to control a heating source.
@@ -66,3 +64,7 @@ https://playground.arduino.cc/Code/Keypad/
 - Included header comment
 - Improved README.md
 - Relocated the pins on the Arduino UNO board to get a more clean looking device
+
+### v0.8
+- Removed LibPrintf.h to reduce memory usage
+- $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
