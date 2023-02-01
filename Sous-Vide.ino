@@ -26,7 +26,6 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 #include <Keypad.h>
-#include <LibPrintf.h>
 
 // Define number of rows and columns for keypad
 const byte ROWS = 4; 
@@ -79,7 +78,8 @@ void setup()
 
     // Wait for 1500ms before displaying the message
     delay(1500);
-    printf("SETUP OK.\nPress a key from the keypad to get the temperature reading:\n");
+    Serial.println("SETUP OK.");
+    Serial.println("Press a key from the keypad to get the temperature reading:");
 }
 
 
@@ -105,7 +105,9 @@ void loop()
                 // Get the temperature in Celsius
                 float tempC = sensors.getTempC(tempDeviceAddress);
                 // Print the key press, device number, and temperature to the serial monitor
-                printf("%c - DEV%i - %.2fC\n", customKey, i, tempC);
+                Serial.print(customKey);
+                Serial.print(" - ");
+                Serial.println(tempC);
             }
         }
 
@@ -115,12 +117,12 @@ void loop()
             if(digitalRead(HEAT_RELAY_PIN) == LOW)
             {
                 digitalWrite(HEAT_RELAY_PIN, HIGH);
-                printf("Heat relay ON\n");
+                Serial.println("Heat relay ON");
             }
             else
             {
                 digitalWrite(HEAT_RELAY_PIN, LOW);
-                printf("Heat relay OFF\n");
+                Serial.println("Heat relay OFF");
             }
         }
     }
