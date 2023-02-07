@@ -55,3 +55,7 @@ The device will be loaded with preset options for different foods, as well as a 
 
 ### v1.0
 - Restarted the project using official libraries and a 4.7k resistor. This helped development transition to the PlatformIO IDE which is more VSCode-friendly than the Arduino IDE previusly used.
+- Implemented debug aliases to facilitate serial print removal upon deployment
+
+### v1.1
+- Implemented the ability to store numeric keypad inputs into integers
