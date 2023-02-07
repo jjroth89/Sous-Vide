@@ -1,0 +1,57 @@
+# DIY Sous-Vide Temperature Control using Arduino
+The DIY Sous-Vide Temperature Control program is an innovative solution to achieve precision temperature control in a homemade sous-vide setup. Using a Dallas DS18B20 waterproof temperature sensor, a 4x4 hex keypad, and two relay modules, this project allows you to easily control the temperature of your sous-vide bath.
+
+This program utilizes the OneWire communication protocol along the DallasTemperature library to read the temperature.
+
+The device will be loaded with preset options for different foods, as well as a feature to allow manual preset inputs, giving you ultimate control over your sous-vide cooking. With this project, you can achieve professional-grade results at a fraction of the cost of commercial sous-vide machines.
+
+## Hardware Used
+- Arduino UNO
+- Dallas DS18B20 waterproof temperature sensor
+- Generic 4x4 hex keypad
+- Relay modules
+
+## Libraries Used
+- OneWire
+- DallasTemperature
+- Keypad
+
+## Arduino Connection Diagram
+- Connect the temperature sensor data wire (yellow) to pin A1
+- Connect the keypad rows to pins 9, 8, 7, 6
+- Connect the keypad columns to pins 5, 4, 3, 2
+- Connect the heat relay to pin A3
+- Connect the pump relay to pin A4
+
+## Setup
+1. Download and install the OneWire, DallasTemperature and Keypad libraries.
+2. Connect the temperature sensor, keypad, and relay module to the Arduino as per the connection diagram.
+3. Upload the code to the Arduino and open the serial monitor.
+4. Follow the serial output in order to setup the device and start using it.
+
+## Features to be added
+- Addition of temperature and time profiles for the relay module to control a heating source.
+- Implementing a LCD display to make it more user-friendly.
+- Adding the ability to set and display temperature thresholds for the sensor.
+- Implementing a web-based interface for monitoring and controlling the temperature remotely.
+- Implementing a data logging feature to record temperature readings over time and display them in a graph.
+- Adding the ability to send notifications or alerts when certain temperature thresholds are reached or exceeded.
+- Adding the ability to control the relay via voice commands through integration with virtual assistants such as Amazon Alexa or Google Assistant.
+- Implementing a mobile app for remote monitoring and control of the temperature.
+
+## Changelog
+### NoResistor v0.6
+- Initial release of the program using the NoResistor version of OneWire library
+- Includes temperature reading and display through keypad input and serial monitor output
+- Optional relay module for controlling a heating source
+
+### vNoResistor 0.7
+- Included header comment
+- Improved README
+- Relocated the pins on the Arduino UNO board to get a more clean looking device
+
+### NoResistor v0.8
+- Removed LibPrintf.h to reduce memory usage
+
+### v1.0
+- Restarted the project using official libraries and a 4.7k resistor. This helped development transition to the PlatformIO IDE which is more VSCode-friendly than the Arduino IDE previusly used.

@@ -1,2 +1,6 @@
-**/.vscode/
-git_bash_here.bat
+.pio
+.vscode
+include
+lib
+test
+platformio.ini

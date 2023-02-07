@@ -9,7 +9,7 @@
  * Date: January 2023
  * 
  * @author jjroth89
- * @version 0.1
+ * @version 1.0
  */
 
 #include <OneWire.h>
