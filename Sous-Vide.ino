@@ -19,14 +19,13 @@
  * https://wp.josh.com/2014/06/23/no-external-pull-up-needed-for-ds18b20-temp-sensor/
  * 
  * @author jjroth89
- * @version 0.7.1
+ * @version 0.8
  */
 
 
 #include <OneWire.h>
 #include <DallasTemperature.h>
 #include <Keypad.h>
-#include <LibPrintf.h>
 
 // Define number of rows and columns for keypad
 const byte ROWS = 4; 
@@ -49,7 +48,7 @@ byte rowPins[ROWS] = {9, 8, 7, 6};   // Orange wires, ascending order
 byte colPins[COLS] = {5, 4, 3, 2};      // White wires, ascending order
 
 // Initialize keypad using defined layout and pin numbers
-Keypad customKeypad = Keypad(makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS); 
+Keypad keypad = Keypad(makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS); 
 
 // Define pin number for OneWire bus and relays
 #define ONE_WIRE_BUS A1
@@ -79,7 +78,8 @@ void setup()
 
     // Wait for 1500ms before displaying the message
     delay(1500);
-    printf("SETUP OK.\nPress a key from the keypad to get the temperature reading:\n");
+    Serial.println("SETUP OK.");
+    Serial.println("Press a key from the keypad to get the temperature reading:");
 }
 
 
@@ -87,40 +87,36 @@ void loop()
 {
     // Begin communication with Dallas Temperature sensors
     sensors.begin();
-    // Get the number of devices connected
-    numberOfDevices = sensors.getDeviceCount();
     // Check if a key press is detected
-    char customKey = customKeypad.getKey();
-    if (customKey)
+    char key = keypad.getKey();
+    if (key)
     {
         DeviceAddress tempDeviceAddress;
-        // Loop through all connected devices
-        for (int i = 0; i < numberOfDevices; i++)
+        // Get the device address
+        if (sensors.getAddress(tempDeviceAddress, 0))
         {
-            // Get the device address
-            if (sensors.getAddress(tempDeviceAddress, i))
-            {
-                // Request temperature from device
-                sensors.requestTemperatures();
-                // Get the temperature in Celsius
-                float tempC = sensors.getTempC(tempDeviceAddress);
-                // Print the key press, device number, and temperature to the serial monitor
-                printf("%c - DEV%i - %.2fC\n", customKey, i, tempC);
-            }
+            // Request temperature from device
+            sensors.requestTemperatures();
+            // Get the temperature in Celsius
+            float tempC = sensors.getTempC(tempDeviceAddress);
+            // Print the key press, device number, and temperature to the serial monitor
+            Serial.print(key);
+            Serial.print(" - ");
+            Serial.println(tempC);
         }
 
         // Toggles heat relay ON/OFF on "*" key press
-        if (customKey == '*')
+        if (key == '*')
         {
             if(digitalRead(HEAT_RELAY_PIN) == LOW)
             {
                 digitalWrite(HEAT_RELAY_PIN, HIGH);
-                printf("Heat relay ON\n");
+                Serial.println("Heat relay ON");
             }
             else
             {
                 digitalWrite(HEAT_RELAY_PIN, LOW);
-                printf("Heat relay OFF\n");
+                Serial.println("Heat relay OFF");
             }
         }
     }
