@@ -79,36 +79,24 @@ void loop() {
 
   if (key) {
     dbl(key);
-    if (key == '*') {
-      inputString = "";                 // clear input
-      targetTemp = 0;
-      cookingTime = 0;
-      dbl("Initializing sous-vide setup.");
-      dbl("Please type in the target temperature in Celsius and then press # to store it:");
-    } else if (key >= '0' && key <= '9') {     // only act on numeric keys
+    if (key >= '0' && key <= '9') {     // only act on numeric keys
       inputString += key;               // append new character to input string
     } else if (key == '#') {
-      if (targetTemp == 0) {
-        if (inputString.length() > 0) {
-          inputInt = inputString.toInt();
-          inputString = "";               // clear input
-          targetTemp = inputInt;
-          dbl("Target temperature set to " + String(targetTemp) + " degrees Celsius. Now please type in the cooking time in hours:");
-        }
-      } else if (cookingTime == 0) {
-        if (inputString.length() > 0) {
-          inputInt = inputString.toInt();
-          inputString = "";               // clear input
-          cookingTime = inputInt;
-          dbl("Cooking time set to " + String(cookingTime) + " hours.");
-          dbl("Please review the cooking settings:");
-          dbl("Target temperature: " + String(targetTemp) + " degrees Celsius.");
-          dbl("Cooking time: " + String(cookingTime) + " hours.");
-          dbl("To confirm these settings and start the cooking cycle, press #. Otherwise press * to restart set up.");
-        }
-      } else {
-        // CONFIRMATION & START COOKING CYCLE
+      if (inputString.length() > 0) {
+        inputInt = inputString.toInt(); // YOU GOT AN INTEGER NUMBER
+        inputString = "";               // clear input
+        dbl(inputInt);
+        // Issue global temperature request to all devices on the bus
+        sensors.requestTemperatures();
+        db("Celsius temperature: ");
+        dbl(sensors.getTempCByIndex(0));   // Index = 0 as there's only one temp sensor
       }
+    } else if (key == '*') {
+      inputString = "";                 // clear input
     }
   }
 }
+// THIS CODE IS WORKING:
+// CHATGPT IS AWARE OF THIS CODE WORKING AND IS AWAITING FURTHER INSTRUCTIONS
+// NEXT STEPS:
+// Add a verification of the targetTemp and cookingTime variables in the beginning of the loop. If == 0, get input and store new value.

@@ -1,7 +1,3 @@
 .pio
 .vscode
-include
 lib
-test
-platformio.ini
-NOTES.txt
