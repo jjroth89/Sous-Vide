@@ -136,6 +136,7 @@ void loop() {
               digitalWrite(HEAT_RELAY_PIN, LOW);
             }
             dbl(key);
+            dbl(millis());
             delay(5000);  // delay 5 seconds between updates
           }
         }
