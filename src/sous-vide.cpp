@@ -9,7 +9,7 @@
  * Date: January 2023
  * 
  * @author jjroth89
- * @version 1.1
+ * @version 1.2.a
  */
 
 #include <OneWire.h>
@@ -67,11 +67,19 @@ void setup() {
   // Start serial communication for debugging purposes
   Serial.begin(9600);
   dbl("SERIAL PORT INITIALIZED");
-  // Start up the library
+
+  // Start up the sensor's library
   sensors.begin();
-  dbl("TEMPERATURE SENSORS INITIALIZED");  
+  dbl("TEMPERATURE SENSORS INITIALIZED");
+
+
+  // Configure the relay pins as outputs
+  pinMode(HEAT_RELAY_PIN, OUTPUT);
+  pinMode(PUMP_RELAY_PIN, OUTPUT);
+  dbl("RELAY PINS INITIALIZED");
+
   inputString.reserve(3); // maximum number of 3 digits for the input number
-  dbl("BOOT COMPLETE");  
+  dbl("BOOT COMPLETE");
 }
 
 void loop() {
@@ -85,29 +93,52 @@ void loop() {
       cookingTime = 0;
       dbl("Initializing sous-vide setup.");
       dbl("Please type in the target temperature in Celsius and then press # to store it:");
+
     } else if (key >= '0' && key <= '9') {     // only act on numeric keys
-      inputString += key;               // append new character to input string
+        inputString += key;               // append new character to input string
+
     } else if (key == '#') {
-      if (targetTemp == 0) {
-        if (inputString.length() > 0) {
-          inputInt = inputString.toInt();
-          inputString = "";               // clear input
-          targetTemp = inputInt;
-          dbl("Target temperature set to " + String(targetTemp) + " degrees Celsius. Now please type in the cooking time in hours:");
-        }
+        if (targetTemp == 0) {
+          if (inputString.length() > 0) {
+            inputInt = inputString.toInt();
+            inputString = "";               // clear input
+            targetTemp = inputInt;
+            dbl("Target temperature set to " + String(targetTemp) + " degrees Celsius. Now please type in the cooking time in hours:");
+          }
+
       } else if (cookingTime == 0) {
-        if (inputString.length() > 0) {
-          inputInt = inputString.toInt();
-          inputString = "";               // clear input
-          cookingTime = inputInt;
-          dbl("Cooking time set to " + String(cookingTime) + " hours.");
-          dbl("Please review the cooking settings:");
-          dbl("Target temperature: " + String(targetTemp) + " degrees Celsius.");
-          dbl("Cooking time: " + String(cookingTime) + " hours.");
-          dbl("To confirm these settings and start the cooking cycle, press #. Otherwise press * to restart set up.");
+          if (inputString.length() > 0) {
+            inputInt = inputString.toInt();
+            inputString = "";               // clear input
+            cookingTime = inputInt;
+            dbl("Cooking time set to " + String(cookingTime) + " hours.");
+            dbl("Please review the cooking settings:");
+            dbl("Target temperature: " + String(targetTemp) + " degrees Celsius.");
+            dbl("Cooking time: " + String(cookingTime) + " hours.");
+            dbl("To confirm these settings and start the cooking cycle, press #. Otherwise press * to restart set up.");
+          }
+
+      } else if (cookingTime * targetTemp > 0 && key == '#') {
+          if (digitalRead(PUMP_RELAY_PIN) == LOW) { 
+            dbl("Starting the water pump.");
+            digitalWrite(PUMP_RELAY_PIN, HIGH);
+
+          while (true) {
+            sensors.requestTemperatures();
+            db("Current temperature: ");
+            db(sensors.getTempCByIndex(0));
+            db(" C - ");
+            if (sensors.getTempCByIndex(0) < targetTemp) {
+              dbl("Heating ON");
+              digitalWrite(HEAT_RELAY_PIN, HIGH);
+            } else {
+              dbl("Heating OFF");
+              digitalWrite(HEAT_RELAY_PIN, LOW);
+            }
+            dbl(key);
+            delay(5000);  // delay 5 seconds between updates
+          }
         }
-      } else {
-        // CONFIRMATION & START COOKING CYCLE
       }
     }
   }

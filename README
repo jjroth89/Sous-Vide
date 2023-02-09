@@ -40,22 +40,29 @@ The device will be loaded with preset options for different foods, as well as a 
 - Implementing a mobile app for remote monitoring and control of the temperature.
 
 ## Changelog
-### NoResistor v0.6
+### NoResistor v0.6.a
 - Initial release of the program using the NoResistor version of OneWire library
 - Includes temperature reading and display through keypad input and serial monitor output
 - Optional relay module for controlling a heating source
 
-### vNoResistor 0.7
+### vNoResistor 0.7.a
 - Included header comment
 - Improved README
 - Relocated the pins on the Arduino UNO board to get a more clean looking device
 
-### NoResistor v0.8
+### NoResistor v0.8.a
 - Removed LibPrintf.h to reduce memory usage
 
-### v1.0
-- Restarted the project using official libraries and a 4.7k resistor. This helped development transition to the PlatformIO IDE which is more VSCode-friendly than the Arduino IDE previusly used.
+### v1.0.a
+- Restarted the project using official libraries and a 4.7k resistor to transition into the PlatformIO IDE which is more VSCode-friendly than the Arduino IDE previusly used
 - Implemented debug aliases to facilitate serial print removal upon deployment
 
-### v1.1
+### v1.1.a
 - Implemented the ability to store numeric keypad inputs into integers
+
+### v1.2.a
+- Changed all previous versions to "alpha", as the project is still not functional
+- Completed cooking temperature and time setup
+- Created a cycle loop that controls the temperature
+- TODO: Implement timer into the cycle
+- TODO: Implement a check for '*' key press to reset the cycle
