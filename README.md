@@ -30,39 +30,41 @@ The device will be loaded with preset options for different foods, as well as a 
 4. Follow the serial output in order to setup the device and start using it.
 
 ## Features to be added
-- Addition of temperature and time profiles for the relay module to control a heating source.
-- Implementing a LCD display to make it more user-friendly.
+- Addition of temperature and time profiles.
+- Implementing an OLED display to make it more user-friendly.
 - Adding the ability to set and display temperature thresholds for the sensor.
-- Implementing a web-based interface for monitoring and controlling the temperature remotely.
 - Implementing a data logging feature to record temperature readings over time and display them in a graph.
 - Adding the ability to send notifications or alerts when certain temperature thresholds are reached or exceeded.
 - Adding the ability to control the relay via voice commands through integration with virtual assistants such as Amazon Alexa or Google Assistant.
 - Implementing a mobile app for remote monitoring and control of the temperature.
 
 ## Changelog
-### NoResistor v0.6.a
+### v0.1.5 NoResistor
 - Initial release of the program using the NoResistor version of OneWire library
 - Includes temperature reading and display through keypad input and serial monitor output
 - Optional relay module for controlling a heating source
 
-### vNoResistor 0.7.a
+### v0.1.6 NoResistor
 - Included header comment
 - Improved README
 - Relocated the pins on the Arduino UNO board to get a more clean looking device
 
-### NoResistor v0.8.a
+### v0.1.7 NoResistor
 - Removed LibPrintf.h to reduce memory usage
 
-### v1.0.a
-- Restarted the project using official libraries and a 4.7k resistor to transition into the PlatformIO IDE which is more VSCode-friendly than the Arduino IDE previusly used
+### v0.2.0
+- Restarted the project using official libraries and a 4.7k resistor to transition into the PlatformIO IDE which is more VSCode-friendly than the Arduino IDE previously used
 - Implemented debug aliases to facilitate serial print removal upon deployment
 
-### v1.1.a
+### v0.2.1
 - Implemented the ability to store numeric keypad inputs into integers
 
-### v1.2.a
-- Changed all previous versions to "alpha", as the project is still not functional
+### v0.3.0
+- Refactored versioning
 - Completed cooking temperature and time setup
-- Created a cycle loop that controls the temperature
-- TODO: Implement timer into the cycle
+- Created a cycle loop that controls the temperature and duration
+- Reduced the number of time-related operations
+
+### Next release - v0.3.1
 - TODO: Implement a check for '*' key press to reset the cycle
+- TODO: Implement a progress bar in the output (on hold until OLED display arrives)
