@@ -8,6 +8,7 @@ The device will be loaded with preset options for different foods, as well as a 
 ## Hardware Used
 - Arduino UNO
 - Dallas DS18B20 waterproof temperature sensor
+- 4.7kΩ resistor
 - Generic 4x4 hex keypad
 - Relay modules
 
@@ -17,15 +18,16 @@ The device will be loaded with preset options for different foods, as well as a 
 - Keypad
 
 ## Arduino Connection Diagram
-- Connect the temperature sensor data wire (yellow) to pin A1
-- Connect the keypad rows to pins 9, 8, 7, 6
-- Connect the keypad columns to pins 5, 4, 3, 2
-- Connect the heat relay to pin A3
-- Connect the pump relay to pin A4
+- Connect the 4.7kΩ resistor between the DS18B20 Vdd wire (red) and data wire (yellow) 
+- Connect the DS18B20 data wire (yellow) to pin **A0**
+- Connect the pump relay to pin **A1**
+- Connect the heat relay to pin **A2**
+- Connect the keypad rows (rightmost half of the connector) to pins 9, 8, 7, 6
+- Connect the keypad columns (leftmost half of the connector) to pins 5, 4, 3, 2
 
 ## Setup
 1. Download and install the OneWire, DallasTemperature and Keypad libraries.
-2. Connect the temperature sensor, keypad, and relay module to the Arduino as per the connection diagram.
+2. Connect the temperature sensor, 4.7kΩ resistor, keypad, and relay module to the Arduino as per the connection diagram.
 3. Upload the code to the Arduino and open the serial monitor.
 4. Follow the serial output in order to setup the device and start using it.
 
@@ -65,6 +67,14 @@ The device will be loaded with preset options for different foods, as well as a 
 - Created a cycle loop that controls the temperature and duration
 - Reduced the number of time-related operations
 
-### Next release - v0.3.1
-- TODO: Implement a check for '*' key press to reset the cycle
+### v0.3.1
+- Refactored code with better comments and better serial monitor handling
+- Improved "Connection Diagram" section to better reflect the current hardware
+- Fixed .gitignore issues
+- Updated README
+
+### v0.3.2 - Future Release
+*This will be the first version after the first test with live heating source and water pump. Expect bug fixing!*
+- TODO: Display time in HH:MM:SS format
 - TODO: Implement a progress bar in the output (on hold until OLED display arrives)
+- TODO: Add a visual connection diagram to the Arduino Connection Diagram section

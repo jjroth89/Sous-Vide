@@ -9,7 +9,7 @@
  * Date: January 2023
  * 
  * @author jjroth89
- * @version 1.2.a
+ * @version 0.3.0
  */
 
 #include <OneWire.h>
@@ -65,72 +65,13 @@ OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 
 void setup() {
-  delay(1500),
-  // Start serial communication for debugging purposes
+  delay(1500),        // Prevent garbage from first serial monitor run
   Serial.begin(9600);
 
-  //! These lines are for better viewing the serial monitor.
-  //! Looks like shit but works... Will be dropped soon.
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  dbl();
-  
+  //! "Clears" the serial monitor for better viewing
+  for (int i = 0; i < 50; i++) {
+    dbl();
+  }
   dbl("SERIAL PORT INITIALIZED");
 
   // Start up the sensor's library
@@ -143,7 +84,7 @@ void setup() {
   pinMode(PUMP_RELAY_PIN, OUTPUT);
   dbl("RELAY PINS INITIALIZED");
 
-  inputString.reserve(3); // Reserve 3 digits for the input number
+  inputString.reserve(4);
   dbl("BOOT COMPLETE");
   dbl();
   dbl("Press '*' to start the sous-vide setup...");
@@ -156,21 +97,21 @@ void loop() {
   if (key) {
     db(key);
     if (key == '*') {
-      inputString = "";                 // clear input
+      inputString = "";   // Clear input
       targetTemp = 0;
       cookingTime = 0;
       dbl("Initializing sous-vide setup...");
       dbl();
       dbl("Please type in the target temperature in Celsius and then press '#' to store it:");
 
-    } else if (key >= '0' && key <= '9') {     // only act on numeric keys
-        inputString += key;               // append new character to input string
+    } else if (key >= '0' && key <= '9') {    // Only act on numeric keys
+        inputString += key;   // Append new character to input string
 
     } else if (key == '#') {
         if (targetTemp == 0) {
           if (inputString.length() > 0) {
             inputInt = inputString.toInt();
-            inputString = "";               // clear input
+            inputString = "";   // Clear input
             targetTemp = inputInt;
             dbl();
             dbl("Target temperature set to " + String(targetTemp) + "º Celsius.");
@@ -181,14 +122,14 @@ void loop() {
       } else if (cookingTime == 0) {
           if (inputString.length() > 0) {
             inputInt = inputString.toInt();
-            inputString = "";                   // Clear input
+            inputString = "";   // Clear input
             cookingTime = inputInt;
             dbl();
             dbl("Cooking time set to " + String(cookingTime) + " hours.");
             dbl();
             dbl("Please review the cooking settings:");
             dbl();
-            dbl("Target temperature .... " + String(targetTemp) + " º Celsius.");
+            dbl("Target temperature .... " + String(targetTemp) + "º Celsius.");
             dbl("Cooking time .......... " + String(cookingTime) + " hours.");
             dbl();
             dbl("Press '#' to confirm and start cooking.");
@@ -197,7 +138,7 @@ void loop() {
 
       } else if (cookingTime * targetTemp > 0 && key == '#') {
           // Cycle starts here
-          cookingTime = inputInt * 3.6e6;       // Transform hours to milliseconds
+          cookingTime = inputInt * 3.6e6;   // Transform hours to milliseconds
           const unsigned long cycleStartTime = millis();
           if (digitalRead(PUMP_RELAY_PIN) == LOW) {
             dbl();
@@ -208,6 +149,7 @@ void loop() {
 
           while (cycleRemainingTime > 0 && key != '*') {
             cycleRunningTime = millis() - cycleStartTime;
+
             // Check whether the remaining time is greater than or equal to 0.
             // If TRUE, assign it to the variable. If FALSE, assign 0.
             // This prevents cycleRunningTime to overflow
@@ -228,9 +170,9 @@ void loop() {
               digitalWrite(HEAT_RELAY_PIN, LOW);
             }
             db("Cycle running time: ");
-            dblp(cycleRunningTime / 3.6e6, 5);  //reverting back to seconds for debugging purposes
+            dblp(cycleRunningTime / 3.6e6, 5);  // Revert back to seconds for debugging purposes
             db("Remaining time: ");
-            dblp(cycleRemainingTime / 3.6e6, 5);
+            dblp(cycleRemainingTime / 3.6e6, 5);  // Revert back to seconds for debugging purposes
             dbl();
             delay(5000);
           }
