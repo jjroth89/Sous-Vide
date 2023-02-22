@@ -16,6 +16,7 @@ The device will be loaded with preset options for different foods, as well as a 
 - 4.7kΩ resistor
 - Generic 4x4 hex keypad
 - Relay modules
+- Breadboard
 
 ## Libraries Used
 - OneWire
@@ -23,17 +24,20 @@ The device will be loaded with preset options for different foods, as well as a 
 - Keypad
 
 ## Arduino Connection Diagram
+Note that a breadboard/circuit board is necessary for this setup. Your breadboard layout may differ from mine, I'm an electronics newbie!
 - Connect the 4.7kΩ resistor between the DS18B20 Vdd wire (red) and data wire (yellow) 
 - Connect the DS18B20 data wire (yellow) to pin **A0**
+- Connect the DS18B20 Vdd wire (red) to pin **5V**
+- Connect the DS18B20 GND wire (black) to pin **GND**
 - Connect the pump relay to pin **A1**
 - Connect the heat relay to pin **A2**
-- Connect the keypad rows (rightmost half of the connector) to pins 9, 8, 7, 6
-- Connect the keypad columns (leftmost half of the connector) to pins 5, 4, 3, 2
+- Connect the keypad rows (rightmost half of the connector) to pins **9, 8, 7, 6**
+- Connect the keypad columns (leftmost half of the connector) to pins **5, 4, 3, 2**
 
 ## Setup
 1. Download and install the OneWire, DallasTemperature and Keypad libraries.
-2. Connect the temperature sensor, 4.7kΩ resistor, keypad, and relay module to the Arduino as per the connection diagram.
-3. Upload the code to the Arduino and open the serial monitor.
+2. Connect the temperature sensor, 4.7kΩ resistor, keypad, and relay module to the Arduino via breadboard as per the connection diagram.
+3. Upload the [code](https://github.com/jjroth89/Sous-Vide/blob/main/src/sous-vide.cpp) to the Arduino and open the serial monitor. If you're using the Arduino IDE, rename the **sous-vide.cpp** file to **sous-vide.ino** in order to open it.
 4. Follow the serial output in order to setup the device and start using it.
 
 ## Features to be added
@@ -79,7 +83,10 @@ The device will be loaded with preset options for different foods, as well as a 
 - Updated README
 
 ### v0.3.2 - Future Release
-*This will be the first version after the first test with live heating source and water pump. Expect bug fixing!*
+**This will be the first version after the first test with live heating source and water pump. Expect bug fixing!**
+- Minor code refactoring
+- TODO: Add timer pause if temperature drops XºC from targetTemp and resume if restored
 - TODO: Display time in HH:MM:SS format
 - TODO: Implement a progress bar in the output (on hold until OLED display arrives)
+- TODO: Add bluetooth interface
 - TODO: Add a visual connection diagram to the Arduino Connection Diagram section

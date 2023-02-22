@@ -9,14 +9,14 @@
  * Date: January 2023
  * 
  * @author jjroth89
- * @version 0.3.0
+ * @version 0.3.2
  */
 
 #include <OneWire.h>
 #include <DallasTemperature.h>
 #include <Keypad.h>
 
-// Define DEBUG mode to TRUE. If FALSE, all serial print commands will be removed when compiling
+// Define DEBUG mode to TRUE. If FALSE, all serial print commands will be removed when compiling, thus disabling them.
 #define DEBUG 1
 
 #if DEBUG == 1
