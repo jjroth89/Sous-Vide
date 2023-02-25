@@ -82,7 +82,11 @@ Note that a breadboard/circuit board is necessary for this setup. Your breadboar
 - Fixed .gitignore issues
 - Updated README
 
-### v0.3.2 - Future Release
+### v0.3.2
+- Fixed while loop and some variable types to better handle the cooking setup
+
+### v0.3.3 - Future Release
+
 **This will be the first version after the first test with live heating source and water pump. Expect bug fixing!**
 - Minor code refactoring
 - TODO: Add timer pause if temperature drops XºC from targetTemp and resume if restored

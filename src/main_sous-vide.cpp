@@ -12,14 +12,6 @@
  * @version 0.3.2
  */
 
-#include <Wire.h>
-#include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
-
-// Reset pin not used but needed for library
-#define OLED_RESET 4
-Adafruit_SSD1306 display(OLED_RESET);
-
 #include <OneWire.h>
 #include <DallasTemperature.h>
 #include <Keypad.h>
@@ -55,8 +47,8 @@ Keypad keypad = Keypad(makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS);
 
 // Define OneWire bus, heat source and water pump pins
 #define ONE_WIRE_BUS A0
-#define HEAT_RELAY_PIN A1
-#define PUMP_RELAY_PIN A2
+#define HEAT_RELAY_PIN 12
+#define PUMP_RELAY_PIN 13
 
 // Declare target temperature and cooking duration variables
 int targetTemp = 0;             // HOURS
@@ -73,9 +65,10 @@ OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 
 void setup() {
-  delay(1500),        // Prevent garbage from first serial monitor run
+  delay(250),        // Prevent garbage from first serial monitor run
+  digitalWrite(HEAT_RELAY_PIN, HIGH);
+  digitalWrite(PUMP_RELAY_PIN, HIGH);
   Serial.begin(9600);
-  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
 
   //! "Clears" the serial monitor for better viewing
   for (int i = 0; i < 50; i++) {
@@ -99,8 +92,8 @@ void setup() {
   dbl("Press '*' to start the sous-vide setup...");
   dbl();
 }
-void loopx() {
 
+void loop() {
   char key = keypad.getKey();
 
   if (key) {
@@ -148,22 +141,21 @@ void loopx() {
       } else if (cookingTime * targetTemp > 0 && key == '#') {
           // Cycle starts here
           cookingTime = inputInt * 3.6e6;   // Transform hours to milliseconds
-          const unsigned long cycleStartTime = millis();
-          if (digitalRead(PUMP_RELAY_PIN) == LOW) {
+          const long cycleStartTime = millis();
+          if (digitalRead(PUMP_RELAY_PIN) == HIGH) {
             dbl();
             dbl("Starting the water pump.");
-            digitalWrite(PUMP_RELAY_PIN, HIGH);
-            unsigned long cycleRunningTime = millis() - cycleStartTime;
-            unsigned long cycleRemainingTime = 1;
+            digitalWrite(PUMP_RELAY_PIN, LOW);
+            long cycleRunningTime = millis() - cycleStartTime;
+            long cycleRemainingTime = 1;
 
-          while (cycleRemainingTime > 0 && key != '*') {
+          while (cycleRemainingTime > 0) {
             cycleRunningTime = millis() - cycleStartTime;
 
             // Check whether the remaining time is greater than or equal to 0.
             // If TRUE, assign it to the variable. If FALSE, assign 0.
             // This prevents cycleRunningTime to overflow
-            cycleRemainingTime = (cookingTime + cycleStartTime - millis() >= 0) ?
-            (cookingTime + cycleStartTime - millis()) : 0;
+            cycleRemainingTime = cookingTime + cycleStartTime - millis();
             sensors.requestTemperatures();
             db("Current temperature: ");
             db(sensors.getTempCByIndex(0));
@@ -173,39 +165,26 @@ void loopx() {
             db("ºC - ");
             if (sensors.getTempCByIndex(0) < targetTemp) {
               dbl("Heating ON");
-              digitalWrite(HEAT_RELAY_PIN, HIGH);
+              digitalWrite(HEAT_RELAY_PIN, LOW);
             } else {
               dbl("Heating OFF");
-              digitalWrite(HEAT_RELAY_PIN, LOW);
+              digitalWrite(HEAT_RELAY_PIN, HIGH);
             }
             db("Cycle running time: ");
             dblp(cycleRunningTime / 3.6e6, 5);  // Revert back to seconds for debugging purposes
             db("Remaining time: ");
             dblp(cycleRemainingTime / 3.6e6, 5);  // Revert back to seconds for debugging purposes
             dbl();
-            display.display();
             delay(5000);
           }
+
+          dbl("End of cycle. Enjoy your food!");
+          digitalWrite(HEAT_RELAY_PIN, HIGH);
         }
       }
     }
   }
 }
 
-void loop() {
-  sensors.requestTemperatures();
-  display.clearDisplay();
-  display.setTextColor(WHITE);
-  display.setTextSize(1);
-  display.setCursor(0,0);
-  display.print("Sous-Vide");
-  display.setCursor(0,8);
-  display.print("Temperature: ");
-  display.print(sensors.getTempCByIndex(0));
-  display.setCursor(0,16);
-  display.print("Running time: ");
-  display.print("X");
-  display.setCursor(0,24);
-  display.print("EEEEEEEE");
-  loopx();
-  }
+// TODO: Improve comments.
+// ? Maybe just add a timer to the oled that starts as soon as the loop starts. At least that's SOMETHING.
