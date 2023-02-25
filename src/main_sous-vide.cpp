@@ -175,7 +175,7 @@ void loop() {
             db("Remaining time: ");
             dblp(cycleRemainingTime / 3.6e6, 5);  // Revert back to seconds for debugging purposes
             dbl();
-            delay(5000);
+            delay(60000);
           }
 
           dbl("End of cycle. Enjoy your food!");
@@ -186,5 +186,8 @@ void loop() {
   }
 }
 
-// TODO: Improve comments.
-// ? Maybe just add a timer to the oled that starts as soon as the loop starts. At least that's SOMETHING.
+// TODO: Improve comments
+// TODO: Fix global variables, it's a mess...
+// ? Make a version that only takes temperature control as, without an interface, it's the best device
+// ! The timer has to start only when the temperature reaches the target!
+// ? Maybe just add a timer to the oled that starts as soon as the loop starts. At least that's SOMETHING...
